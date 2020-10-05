@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from "react";
 import base from "./Verification";
-// var Airtable = require("airtable");
+// import Airtable from "airtable";
+import { Card, Button } from "react-bootstrap";
 
 const Helmet = (props) => {
-  const { Manufacturer, Model, Standard, Config } = props;
+  const { Manufacturer, Model, Standard, Config, imageURL, Link } = props;
   return (
-    <div>
-      <p> {Manufacturer}</p>
-      <p> {Model}</p>
-      <p> {Config}</p>
-      <p> {Standard}</p>
+    <Card style={{ width: "18rem" }}>
+      <Card.Img
+        variant="top"
+        src={imageURL}
+        alt={Manufacturer + " " + Model + "image"}
+      />
+      <Card.Body>
+        <Card.Title>{Manufacturer + Model}</Card.Title>
+        <Card.Text>{"Safety standard: " + Standard}</Card.Text>
+        <Card.Text>{"Type: " + Config}</Card.Text>
 
-      <hr />
-    </div>
+        <Button
+          variant="primary"
+          href={Link}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Link
+        </Button>
+      </Card.Body>
+    </Card>
   );
 };
 
@@ -36,11 +50,11 @@ const Helmets = () => {
   }, []);
 
   return (
-    <div>
+    <section className="cardContainer">
       {array.map((list, index) => {
         return <Helmet key={index} {...list.fields} />;
       })}
-    </div>
+    </section>
   );
 };
 

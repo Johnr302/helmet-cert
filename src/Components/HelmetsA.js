@@ -1,8 +1,10 @@
-var Airtable = require("airtable");
+import React from "react";
+import Airtable from "airtable";
+import "./App.css";
+
 var base = new Airtable({ apiKey: "key2iOVQv50XUKihs" }).base(
   "appJdhwF8rhgTbA7K"
 );
-
 const HelmetA = () => {
   base("Table 1")
     .select({
@@ -18,9 +20,6 @@ const HelmetA = () => {
           console.log("Retrieved", record.get("Manufacturer"));
         });
 
-        // To fetch the next page of records, call `fetchNextPage`.
-        // If there are more records, `page` will get called again.
-        // If there are no more records, `done` will get called.
         fetchNextPage();
       },
       function done(err) {
@@ -32,4 +31,18 @@ const HelmetA = () => {
     );
 };
 
-export default HelmetA;
+base("Table 1")
+  .select({
+    view: "Grid view",
+  })
+  .firstPage(function (err, records) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    records.forEach(function (record) {
+      console.log("Retrieved", record.get("Manufacturer"));
+    });
+  });
+
+export default base;
