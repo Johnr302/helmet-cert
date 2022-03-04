@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import base from "./Verification";
-// import Airtable from "airtable";
+// import base from "./Verification";
+// import {Airtable} from "airtable";
 import { Card, Button } from "react-bootstrap";
+// var Airtable = require("airtable");
 
 const Helmet = (props) => {
   const { Manufacturer, Model, Standard, Config, imageURL, Link } = props;
@@ -33,9 +34,9 @@ const Helmet = (props) => {
 const Helmets = () => {
   const [array, setArray] = useState([]);
 
-  // const setData = (data) => {
-  //   setArray(data.records);
-  // };
+  const setData = (data) => {
+    setArray(data);
+  };
 
   useEffect(() => {
     fetch(
@@ -43,11 +44,22 @@ const Helmets = () => {
     )
       .then((resp) => resp.json())
       .then((data) => {
-        setArray(data.records);
+        let records = data.records;
+        let filteredRecords = records.filter((record) => {
+          return record.fields.Link !== "" && record.fields.imageURL;
+        });
+        setData(filteredRecords);
         console.log(data.records);
       })
       .catch((err) => {});
   }, []);
+
+  // useEffect(() => {
+  //   var Airtable = require("airtable");
+  //   setArray = new Airtable({ apiKey: "YOUR_API_KEY" }).base(
+  //     "appJdhwF8rhgTbA7K"
+  //   );
+  // }, []);
 
   return (
     <section className="cardContainer">

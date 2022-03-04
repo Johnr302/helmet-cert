@@ -1,5 +1,6 @@
 // EXAMPLE USING CUSTOM CONFIGURATION
 // import Airtable from "airtable";
+// var Airtable = require("airtable");
 
 // Airtable.configure({
 //   endpointUrl: "https://api.airtable.com",
